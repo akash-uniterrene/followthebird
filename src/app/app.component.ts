@@ -76,8 +76,6 @@ export class MyApp {
   getNotifictionData(){
     if(localStorage.getItem('user_id')){
       this.user.getLiveLiteData({id: localStorage.getItem('user_id')}).subscribe((resp) => {	
-        console.log(resp);
-        console.log(this.notificationCount);
         if(resp['user_live_notifications_counter'] >= this.notificationCount){
           this.notificationCount = this.notificationCount + 1;
           this.badge.set(resp['user_live_notifications_counter']);

@@ -44,7 +44,6 @@ export class ViewPhotoPage {
   fileTransfer: FileTransferObject = this.transfer.create();
   
   ionViewDidLoad() {
-	console.log(this.photo);  
     this.user.getPhoto(parseInt(localStorage.getItem('user_id')),{'photo_id':this.photo.photo_id})
 		.then(data => {
 		this.photo = data;

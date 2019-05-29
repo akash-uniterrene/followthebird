@@ -202,7 +202,7 @@ export class ProfilePage {
 		this.nav.push('EditDetailsPage', {'profile': profile});
 	}
 	
-	uploadProfilePicture() {
+	uploadProfilePicture(profile) {
 		const actionSheet = this.actionSheetCtrl.create({
 		  title: 'Upload Profile Picture',
 		  buttons: [
@@ -210,7 +210,12 @@ export class ProfilePage {
 			  icon: !this.platform.is('ios') ? 'ios-camera' : null,	
 			  text: 'View profile picture',
 			  handler: () => {
-				this.nav.push('ViewPhotoPage', {photo: ''});
+				let photo: any = {
+					photo_id: profile.user_picture_id,					
+					source: profile.user_picture,
+					privacy: "public"
+				};
+				this.viewImage(photo)
 			  }
 			},{
 			  icon: !this.platform.is('ios') ? 'ios-camera' : null,	
@@ -242,7 +247,8 @@ export class ProfilePage {
 		actionSheet.present();
 	}
 	
-	uploadCoverPicture() {
+	uploadCoverPicture(profile) {
+		
 		const actionSheet = this.actionSheetCtrl.create({
 		  title: 'Upload Cover Picture',
 		  buttons: [
@@ -250,7 +256,12 @@ export class ProfilePage {
 			  icon: !this.platform.is('ios') ? 'ios-image' : null,	
 			  text: 'View cover photo',
 			  handler: () => {
-				this.nav.push('ViewPhotoPage', {photo: ''});
+				  let photo: any = {
+					photo_id: profile.user_cover_id,					
+					source: profile.user_cover,
+					privacy: "public"
+				  };
+				  this.viewImage(photo)
 			  }
 			},{
 			  icon: !this.platform.is('ios') ? 'ios-camera' : null,	
@@ -318,7 +329,7 @@ export class ProfilePage {
 				sourceType: sourceType,
 				encodingType: this.camera.EncodingType.JPEG,
 				mediaType: this.camera.MediaType.PICTURE,
-				//allowEdit:true,
+				allowEdit:true,
 				//targetWidth: 700,
 				//targetHeight: 400,
 				saveToPhotoAlbum: true,

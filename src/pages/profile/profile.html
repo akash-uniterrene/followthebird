@@ -14,7 +14,7 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
      <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div class="profileAndCover" (click)="uploadCoverPicture()"  [style.backgroundImage]="getCoverBackgroundStyle()" >
+  <div class="profileAndCover" (click)="uploadCoverPicture(profile)"  [style.backgroundImage]="getCoverBackgroundStyle()" >
 	<!-- <input type="file" #coverPhoto style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event,'cover')" /> -->
     <button ion-button class="editcoverBtn" *ngIf="profile.user_id == myId">
         <ion-icon color="white" name="camera" role="img" class="icon icon-ios ion-ios-camera" aria-label="camera"></ion-icon>
@@ -24,7 +24,7 @@
   <ion-grid class="profileHeadGrid">
     <ion-row>
       <ion-col col-3 >  
-        <div class="profileWrap" (click)="uploadProfilePicture()">
+        <div class="profileWrap" (click)="uploadProfilePicture(profile)">
           <div class="profileImgArea">
             <img [src]="imageURL+profile.user_picture" onError="this.src='assets/followthebirdImgs/no-profile-img.jpeg'" >            
           </div>
