@@ -208,6 +208,12 @@ export class ProfilePage {
 		  buttons: [
 			{
 			  icon: !this.platform.is('ios') ? 'ios-camera' : null,	
+			  text: 'View profile picture',
+			  handler: () => {
+				this.nav.push('ViewPhotoPage', {photo: ''});
+			  }
+			},{
+			  icon: !this.platform.is('ios') ? 'ios-camera' : null,	
 			  text: 'Take a Picture',
 			  handler: () => {
 				this.takeCameraSnap('profile',1)
@@ -241,6 +247,12 @@ export class ProfilePage {
 		  title: 'Upload Cover Picture',
 		  buttons: [
 			{
+			  icon: !this.platform.is('ios') ? 'ios-image' : null,	
+			  text: 'View cover photo',
+			  handler: () => {
+				this.nav.push('ViewPhotoPage', {photo: ''});
+			  }
+			},{
 			  icon: !this.platform.is('ios') ? 'ios-camera' : null,	
 			  text: 'Take a Picture',
 			  handler: () => {
@@ -306,9 +318,9 @@ export class ProfilePage {
 				sourceType: sourceType,
 				encodingType: this.camera.EncodingType.JPEG,
 				mediaType: this.camera.MediaType.PICTURE,
-				allowEdit:true,
-				targetWidth: 700,
-				targetHeight: 400,
+				//allowEdit:true,
+				//targetWidth: 700,
+				//targetHeight: 400,
 				saveToPhotoAlbum: true,
 				correctOrientation: true //Corrects Android orientation quirks
 			};	
