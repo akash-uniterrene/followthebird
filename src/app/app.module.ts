@@ -18,7 +18,6 @@ import { Post } from '../providers/post/post';
 import { EventsProvider } from '../providers/events/events';
 import { Groups } from '../providers/groups/groups';
 import { ForgetPasswordProvider } from '../providers/forget-password/forget-password';
-
 import { SQLitePorter } from '@ionic-native/sqlite-porter';
 import { SQLite } from '@ionic-native/sqlite';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -30,9 +29,9 @@ import { PageProvider } from '../providers/page/page';
 import { Badge } from '@ionic-native/badge';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { ImagePicker } from '@ionic-native/image-picker';
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
-
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -87,6 +86,7 @@ export function provideSettings(storage: Storage) {
 	Badge,
     SplashScreen,
     StatusBar,
+	ImagePicker,
 	LocalNotifications,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development

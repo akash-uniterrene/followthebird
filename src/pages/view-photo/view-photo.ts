@@ -90,7 +90,6 @@ export class ViewPhotoPage {
 		  text: 'Share External',
 		  handler: () => {
 			this.shareImg(photo.source,"ShareImage");  
-			//this.socialSharing.share("text", this.imageURL+photo.source,  '', this.imageURL+photo.source)
 		  }
 		}
 	];

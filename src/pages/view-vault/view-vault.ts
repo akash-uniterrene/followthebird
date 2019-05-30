@@ -185,7 +185,6 @@ export class ViewVaultPage {
 		  correctOrientation: true
 		}
 		
-		
 		this.camera.getPicture(options).then((imageData) => {
 		   this.vaultPhotoOptions.patchValue({ 'file': "data:image/jpeg;base64,"+imageData }); 
 			this.uploadPhoto(this.vaultPhotoOptions);

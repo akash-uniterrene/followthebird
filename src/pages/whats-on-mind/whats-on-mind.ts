@@ -6,6 +6,7 @@ import { User } from '../../providers';
 import { Post } from '../../providers/post/post';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ImagePicker,ImagePickerOptions  } from '@ionic-native/image-picker'; 
 /**
  * Generated class for the WhatsOnMindPage page.
  *
@@ -53,6 +54,7 @@ export class WhatsOnMindPage {
   pushPage: any;
   public publishPhotos : any = [];
   public icon;
+  public imageLists: any[] = [];
   private mediaPublisher : any ='';
   private imageURL = "https://followthebirds.com/content/uploads/";
   constructor(
@@ -67,6 +69,7 @@ export class WhatsOnMindPage {
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform, 
     private camera: Camera,
+	public imagePicker: ImagePicker,
 	public modalCtrl: ModalController,
     public modal: ViewController,
 	private transfer: FileTransfer,
@@ -211,38 +214,38 @@ export class WhatsOnMindPage {
   }
 
   uploadPicture() {
-		const actionSheet = this.actionSheetCtrl.create({
-			title: 'Upload Photos',
-			buttons: [
-			{
-				icon: !this.platform.is('ios') ? 'ios-camera' : null,	
-				text: 'Take a Picture',
-				handler: () => {
-				this.takeCameraSnap(1)
-				}
-			},{
-				icon: !this.platform.is('ios') ? 'ios-images' : null,		
-				text: 'Upload from gallery',
-				handler: () => {
-					this.takeCameraSnap(0)
-					//this.uploadFromGallery('photo');
-				}
-			},{
-				icon: !this.platform.is('ios') ? 'ios-folder' : null,		
-				text: 'Upload from vault',
-				handler: () => {
-				this.uploadFromVault('image');
-				}
-			},{
-				icon: !this.platform.is('ios') ? 'close' : null,
-				text: 'Cancel',
-				role: 'cancel',
-				handler: () => {
-				}
+	const actionSheet = this.actionSheetCtrl.create({
+		title: 'Upload Photos',
+		buttons: [
+		{
+			icon: !this.platform.is('ios') ? 'ios-camera' : null,	
+			text: 'Take a Picture',
+			handler: () => {
+			this.takeCameraSnap(1)
 			}
-			]
-		});
-		actionSheet.present();
+		},{
+			icon: !this.platform.is('ios') ? 'ios-images' : null,		
+			text: 'Upload from gallery',
+			handler: () => {
+				this.loadMultipleImageFromGallery();
+				//this.takeCameraSnap(0)
+			}
+		},{
+			icon: !this.platform.is('ios') ? 'ios-folder' : null,		
+			text: 'Upload from vault',
+			handler: () => {
+			this.uploadFromVault('image');
+			}
+		},{
+			icon: !this.platform.is('ios') ? 'close' : null,
+			text: 'Cancel',
+			role: 'cancel',
+			handler: () => {
+			}
+		}
+		]
+	});
+	actionSheet.present();
   }
   
   
@@ -306,33 +309,53 @@ export class WhatsOnMindPage {
   }
 
   uploadFile() {
-		const actionSheet = this.actionSheetCtrl.create({
-			buttons: [
-			{
-				icon: !this.platform.is('ios') ? 'ios-attach' : null,		
-				text: 'Upload Attachment',
-				handler: () => {
-				this.uploadFromGallery('file');
-				}
-			},{
-				icon: !this.platform.is('ios') ? 'ios-folder' : null,		
-				text: 'Upload from vault',
-				handler: () => {
-				this.uploadFromVault('files');
-				}
-			},{
-				icon: !this.platform.is('ios') ? 'close' : null,
-				text: 'Cancel',
-				role: 'cancel',
-				handler: () => {
-				}
+	const actionSheet = this.actionSheetCtrl.create({
+		buttons: [
+		{
+			icon: !this.platform.is('ios') ? 'ios-attach' : null,		
+			text: 'Upload Attachment',
+			handler: () => {
+			this.uploadFromGallery('file');
 			}
-			]
-		});
-		actionSheet.present();
+		},{
+			icon: !this.platform.is('ios') ? 'ios-folder' : null,		
+			text: 'Upload from vault',
+			handler: () => {
+			this.uploadFromVault('files');
+			}
+		},{
+			icon: !this.platform.is('ios') ? 'close' : null,
+			text: 'Cancel',
+			role: 'cancel',
+			handler: () => {
+			}
+		}
+		]
+	});
+	actionSheet.present();
   }
   
-  
+	public loadMultipleImageFromGallery() {  
+		 let options: ImagePickerOptions = {  
+			quality: 100,  
+			width: 600,  
+			height: 600,  
+			outputType: 1, 
+			maximumImagesCount: 15,
+		}; 
+		this.imagePicker.getPictures(options).then((results) => {  
+			for (let index = 0; index < results.length; index++) {  
+				this.imageLists.push('data:image/jpeg;base64,' + results[index]);  
+			}  
+			console.log("Image Lists", this.imageLists);  
+			this.postPhotoOptions.patchValue({ 'file': this.imageLists }); 
+		   this.postPhotoOptions.patchValue({ 'multiple': true });
+		   this.uploadMultiPhoto(this.postPhotoOptions);
+		}, (error) => {  
+			// Handle error   
+			console.log("Error ", error);  
+		});  
+	} 
   
 	takeCameraSnap(sourceType:number){
 		// const options: CameraOptions = {
@@ -361,6 +384,7 @@ export class WhatsOnMindPage {
 
 		this.camera.getPicture(options).then((imageData) => {
 		  // imageData is either a base64 encoded string or a file URI
+		  console.log(imageData);
 		   this.postPhotoOptions.patchValue({ 'file': "data:image/jpeg;base64,"+imageData }); 
 		   this.postPhotoOptions.patchValue({ 'multiple': false });
 		   this.uploadSinglePhoto(this.postPhotoOptions);
@@ -374,10 +398,6 @@ export class WhatsOnMindPage {
 		 });
 	}
 	
-	processWebImage(event) {
-		this.uploadPhoto(event.target.files);	  
-	} 
-	
 	uploadFromGallery(type){
 		if(type == 'photo'){
 			this.postPhoto.nativeElement.click();
@@ -389,6 +409,10 @@ export class WhatsOnMindPage {
 			this.postFile.nativeElement.click();
 		}
 	}
+	
+	processWebImage(event) {
+		this.uploadPhoto(event.target.files);	  
+	} 
 
 	processWebVideo(event) {
 		this.postVideoOptions.patchValue({ 'multiple': false });
@@ -403,6 +427,35 @@ export class WhatsOnMindPage {
 	processWebFile(event) {
 		this.postFileOptions.patchValue({ 'multiple': false });
 		this.uploadMedia(event.target.files[0],'file');
+	}
+	
+	uploadMultiPhoto(params){
+		let loading = this.loadingCtrl.create({
+			content: 'Uploading...'
+		});
+		loading.present();
+		 this.user.nativePhotoUploader(params).subscribe((resp) => {
+			loading.dismiss();	
+			this.imageLists = [];
+			console.log(resp);
+			if(this.publishPhotos.length > 0){
+				for (var key in resp) {
+				  this.publishPhotos.push(resp[key]);
+				}
+			} else {
+				this.publishPhotos = resp;
+			}
+			//this.publishPhotos.push(resp);
+			this.publisherInfo.photos = JSON.stringify(this.publishPhotos);
+		}, (err) => {
+			loading.dismiss();		
+		  let toast = this.toastCtrl.create({
+			message: "image uploading failed",
+			duration: 3000,
+			position: 'top'
+		  });
+		  toast.present();
+		});
 	}
 	
 	uploadSinglePhoto(params){

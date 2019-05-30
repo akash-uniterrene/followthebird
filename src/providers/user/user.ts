@@ -485,6 +485,19 @@ export class User {
     let seq = this.api.post('upload', params.value).share();
 
     seq.subscribe((res: any) => {
+
+    }, err => {
+      console.error('ERROR', err);
+    });
+
+      return seq;
+  }
+  
+  nativePhotoUploader(params){
+	  console.log(params.value);
+	  let seq = this.api.post('uploadNative', params.value).share();
+
+    seq.subscribe((res: any) => {
         // If the API returned a successful response, mark the user as logged in
       /* if (res.status == 'success') {
         //this._loggedIn(res);
@@ -551,20 +564,7 @@ export class User {
     });
 
     return seq;
-  }
-  
-  test1(data){
-	var options = {
-	};
-	let body = new FormData();
-	body.append('image', data);
-	body.append('desc', "testing");
-	this.api.post('file_upload', body, options).subscribe(res => {
-	console.log(res);
-	});
-	;
- }
- 
+  } 
  
  fileUploader(data,params){
 	var options = {
@@ -599,14 +599,10 @@ export class User {
 	for (var i = 0; i<=data.length; i++) {
 	  body.append('file[]',data[i]);
 	}
-	
-	//body.append('file[]', data);
-	console.log(data);
-	
+		
 	for (var key in params) {
 	  body.append(key,params[key]);
 	}
-	console.log(body);
 	
 	let seq = this.api.post('vault_upload', body, options).share();
 
@@ -619,23 +615,7 @@ export class User {
     return seq;
  }
  
- vaultImageUploader(params){
-	/* var options = {
-	};
-	
-	let body = new FormData();
-	for (var i = 0; i<=data.length; i++) {
-	  body.append('file[]',data[i]);
-	}
-	
-	//body.append('file[]', data);
-	console.log(data);
-	
-	for (var key in params) {
-	  body.append(key,params[key]);
-	}
-	console.log(body); */
-	
+ vaultImageUploader(params){	
 	let seq = this.api.post('vault_image_upload', params.value).share();
 
     seq.subscribe((res: any) => {
@@ -766,7 +746,6 @@ export class User {
   }
   
   viewMessage(params: any){
-	console.log(params);
 	let messages = [];	
 	let seq = this.api.get('view_conversation', params).share();
 	// don't have the data yet
@@ -832,6 +811,5 @@ export class User {
 	});  
   }
   
-  
-  
+
 }

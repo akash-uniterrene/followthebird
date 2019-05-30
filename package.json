@@ -27,6 +27,7 @@
     "@ionic-native/file": "^4.19.0",
     "@ionic-native/file-opener": "^4.20.0",
     "@ionic-native/file-transfer": "^4.20.0",
+    "@ionic-native/image-picker": "^4.20.0",
     "@ionic-native/local-notifications": "^4.20.0",
     "@ionic-native/photo-viewer": "^4.20.0",
     "@ionic-native/social-sharing": "^4.20.0",
@@ -38,7 +39,7 @@
     "@ionic/storage": "2.2.0",
     "@ngx-translate/core": "8.0.0",
     "@ngx-translate/http-loader": "^2.0.0",
-    "cordova-android": "7.1.4",
+    "cordova-android": "7.0.0",
     "cordova-ios": "4.5.5",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-badge": "^0.8.8",
@@ -52,6 +53,7 @@
     "cordova-plugin-local-notification": "^0.9.0-beta.2",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-telerik-imagepicker": "^2.3.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-x-socialsharing": "^5.4.4",
     "cordova-sqlite-storage": "^2.6.0",
@@ -65,7 +67,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.2.1",
+    "@ionic/app-scripts": "^3.2.4",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
@@ -93,11 +95,14 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-android-permissions": {},
-      "cordova-plugin-local-notification": {}
+      "cordova-plugin-local-notification": {},
+      "cordova-plugin-telerik-imagepicker": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Message for Usage"
+      }
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
