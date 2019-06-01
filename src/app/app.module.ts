@@ -30,6 +30,7 @@ import { Badge } from '@ionic-native/badge';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { Network } from '@ionic-native/network';
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: HttpClient) {
@@ -95,6 +96,7 @@ export function provideSettings(storage: Storage) {
 	Post,
 	EventsProvider,
 	Groups,
+	Network,
 	SocialSharing,
 	FileOpener,
     ForgetPasswordProvider,

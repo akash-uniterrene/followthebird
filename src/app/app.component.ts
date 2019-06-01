@@ -28,17 +28,19 @@ export class MyApp {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#750bb5');
       this.splashScreen.hide();
-	  this.sub = Observable.interval(3000)
+	  if(localStorage.getItem('user_id')){
+		this.sub = Observable.interval(3000)
 			.subscribe((val) => { this.getNotifictionData() });
-	  this.localNotifications.on('click').subscribe((notification) => {
-		let json = JSON.parse(notification.data);
-		let alert = this.alertCtrl.create({
-			title : notification.data,
-			subTitle : json.myData
-		});	
-		alert.present();
-	  });
-   });
+	    this.localNotifications.on('click').subscribe((notification) => {
+			let json = JSON.parse(notification.data);
+			let alert = this.alertCtrl.create({
+				title : notification.data,
+				subTitle : json.myData
+			});	
+			alert.present();
+	    });
+      }	  
+    });
     this.initTranslate();
   }
 
@@ -73,18 +75,16 @@ export class MyApp {
   }
 
   getNotifictionData(){
-    if(localStorage.getItem('user_id')){
-      this.user.getLiveLiteData({id: localStorage.getItem('user_id')}).subscribe((resp) => {	
+	this.user.getLiveLiteData({id: localStorage.getItem('user_id')}).subscribe((resp) => {	
         if(resp['user_live_notifications_counter'] >= this.notificationCount){
           this.notificationCount = this.notificationCount + 1;
           this.badge.set(resp['user_live_notifications_counter']);
           this.seduleNotification("John doe comments on your photo");
         }
         
-      }, (err) => {
+    }, (err) => {
         
-      });	
-   }
+    });	      
   }
 
   seduleNotification(msg){
