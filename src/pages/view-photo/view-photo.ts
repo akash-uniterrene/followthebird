@@ -21,6 +21,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class ViewPhotoPage {
   public photo : any = [];
+  public screenBlur = 1;
   private imageURL = "https://followthebirds.com/content/uploads/";
   constructor(public navCtrl: NavController, 
     public user: User,
@@ -44,10 +45,28 @@ export class ViewPhotoPage {
   fileTransfer: FileTransferObject = this.transfer.create();
   
   ionViewDidLoad() {
-    this.user.getPhoto(parseInt(localStorage.getItem('user_id')),{'photo_id':this.photo.photo_id})
+    this.user.getPhoto(parseInt(localStorage.getItem('user_id')),{'photo_id':this.photo.photo_id,'get_gallery':true})
 		.then(data => {
 		this.photo = data;
 	});
+  }
+  
+  getNextPhoto(nextData){	 
+	this.screenBlur = 0.5;
+	this.user.getPhoto(parseInt(localStorage.getItem('user_id')),{'photo_id':nextData.photo_id,'get_gallery':true})
+		.then(data => {
+		this.photo = data;
+		this.screenBlur = 1;
+	});  
+  }
+  
+  getPrevPhoto(prevData){
+	 this.screenBlur = 0.5;
+	 this.user.getPhoto(parseInt(localStorage.getItem('user_id')),{'photo_id':prevData.photo_id,'get_gallery':true})
+		.then(data => {
+		this.photo = data;
+		this.screenBlur = 1;
+	}); 
   }
   
   viewComments(){
@@ -227,7 +246,7 @@ export class ViewPhotoPage {
 				dismissOnPageChange: true
 			});
 			toast.present();
-			this.goBack();
+			this.getNextPhoto(this.photo.next);
 		}, (err) => {
 			let toast = this.toastCtrl.create({
 				message: "sorry! image is unable to delete.",

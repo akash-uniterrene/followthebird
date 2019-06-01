@@ -182,8 +182,7 @@ export class WhatsOnMindPage {
     this.loading.present();
       //Attempt to login in through our User service
       this.post.publishPost(this.publisherInfo).subscribe((resp) => {
-				this.loading.dismiss();
-				this.loading.dismiss();
+		this.loading.dismiss();
         let toast = this.toastCtrl.create({
           message: "Status has been successfully posted.",
           duration: 3000,
@@ -227,8 +226,8 @@ export class WhatsOnMindPage {
 			icon: !this.platform.is('ios') ? 'ios-images' : null,		
 			text: 'Upload from gallery',
 			handler: () => {
-				this.loadMultipleImageFromGallery();
-				//this.takeCameraSnap(0)
+				//this.loadMultipleImageFromGallery();
+				this.takeCameraSnap(0)
 			}
 		},{
 			icon: !this.platform.is('ios') ? 'ios-folder' : null,		
@@ -355,8 +354,9 @@ export class WhatsOnMindPage {
 			// Handle error   
 			console.log("Error ", error);  
 		});  
-	} 
-  
+	}
+    
+	
 	takeCameraSnap(sourceType:number){
 		// const options: CameraOptions = {
 		  // quality: 100,

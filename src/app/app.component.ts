@@ -30,7 +30,6 @@ export class MyApp {
       this.splashScreen.hide();
 	  this.sub = Observable.interval(3000)
 			.subscribe((val) => { this.getNotifictionData() });
-	  this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.STORAGE, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
 	  this.localNotifications.on('click').subscribe((notification) => {
 		let json = JSON.parse(notification.data);
 		let alert = this.alertCtrl.create({

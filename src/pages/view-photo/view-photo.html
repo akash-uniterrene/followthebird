@@ -1,13 +1,12 @@
 
 <ion-content class="dark_page" [style.backgroundImage]="getBackgroundStyle(photo.source)">
+<div style="height:100%" [style.opacity]="screenBlur" (swipeleft)="getNextPhoto(photo.next)" (swiperight)="getPrevPhoto(photo.prev)">
 <ion-buttons >
   <button left ion-button icon-only color="light" clear (click)="goBack()"><ion-icon name="arrow-back"></ion-icon></button>
   <button style="float: right;" ion-button icon-only color="light" clear (click)="photoActivity(photo)"><ion-icon name="more"></ion-icon></button>
   <button style="float: right;" ion-button icon-only color="light" clear  (click)="openSearch()"><ion-icon ios="ios-search" md="md-search"></ion-icon></button>
-  
-  
 </ion-buttons>
-
+</div>
 </ion-content>
 <ion-footer>
 	<ion-row class="comment_share">
