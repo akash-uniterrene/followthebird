@@ -271,6 +271,10 @@ export class ViewMessagePage {
 	  this.showEmojiTab = action;
   }
 
+  sendEmoji(emoji){
+	this.chatInfo.message = this.chatInfo.message + emoji + ' ';
+  }
+  
   
   sendStickerMsg(sticker){
 	this.stickerHeight = 0;
@@ -314,7 +318,6 @@ export class ViewMessagePage {
 	
 	getLiveLiteChat(){
 		if(this.conversation.conversation_id !== undefined){
-			console.log(this.conversation.conversation_id);
 			let items :any = {
 				user_id:localStorage.getItem('user_id'),
 				conversation_id:this.conversation.conversation_id,

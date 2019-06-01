@@ -75,21 +75,11 @@
 		  Sticker
 		</ion-segment-button>
 	</ion-segment>
-	<!-- <ion-grid>
-	  <ion-row>
-		<ion-col text-center> 
-			<button  ion-button color="primary" round  (tap)="showEmoji('true',$event)">Emoji</button>
-		</ion-col>
-		<ion-col text-center> 
-			<button class="stickerToggle" ion-button color="light" round  (tap)="showEmoji('false',$event)"></button>
-		</ion-col>
-	  </ion-row>	
-	</ion-grid> -->
 	<div [ngSwitch]="stickerEmoji" class="stickers_container" [style.height.px]="stickerHeight"> 
 	  <ion-grid *ngSwitchCase="'emoji'">
 		<ion-row>
-			<ion-col *ngFor="let sticker of allSticker" col-2 (tap)="sendStickerMsg(':STK-'+sticker.sticker_id+':')">
-			 :)
+			<ion-col *ngFor="let emoji of allEmoji" col-2 (tap)="sendEmoji(emoji.pattern)">
+			  <i class="js_emoji twa twa-2x twa-{{emoji['class']}}"></i>
 			</ion-col>
 		</ion-row>
 	  </ion-grid>
