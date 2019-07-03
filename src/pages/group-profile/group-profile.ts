@@ -202,13 +202,13 @@ export class GroupProfilePage {
 			  icon: !this.platform.is('ios') ? 'ios-camera' : null,	
 			  text: 'Take a Picture',
 			  handler: () => {
-				this.takeCameraSnap()
+				this.takeCameraSnap(1)
 			  }
 			},{
 			  icon: !this.platform.is('ios') ? 'ios-images' : null,		
 			  text: 'Upload from gallery',
 			  handler: () => {
-				this.uploadFromGallery()
+				this.takeCameraSnap(0)
 			  }
 			},{
 			  icon: !this.platform.is('ios') ? 'trash' : null,
@@ -228,11 +228,11 @@ export class GroupProfilePage {
 		actionSheet.present();
 	}
   
-	takeCameraSnap(){
+	takeCameraSnap(sourceType:number){
 		const options: CameraOptions = {
 		  quality: 100,
 		  destinationType: this.camera.DestinationType.DATA_URL,
-		  sourceType: this.camera.PictureSourceType.CAMERA,
+		  sourceType: sourceType,
 		  encodingType: this.camera.EncodingType.JPEG,
 		  mediaType: this.camera.MediaType.PICTURE,
 		  allowEdit:true,

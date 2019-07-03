@@ -36,7 +36,7 @@
 					</div>
 					<div *ngIf="stickers.hasOwnProperty(message.message) == false">
 						<div *ngIf="emojis.hasOwnProperty(message.message) == true" > {{emojis[message.message]}} </div>
-						<div *ngIf="emojis.hasOwnProperty(message.message) == false" > {{message.message}} </div>
+						<div *ngIf="emojis.hasOwnProperty(message.message) == false" > <div [innerHtml]="message.message"></div></div>
 					</div>					
 				</div>
 				<button ion-button outline *ngIf="bulkMessage == 'true'" item-end (click)="sentBulkMessage($event,message)">Send</button>

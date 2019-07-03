@@ -47,7 +47,7 @@
 	  <button ion-button clear icon-only item-end (tap)="postActivity($event,feeds)"><ion-icon name="ios-more-outline"></ion-icon></button>
 	</ion-item>
 	<ion-card-content *ngIf="feeds.text" >
-		<p style="padding-bottom: 3px;padding-left: 10px;">{{feeds.text}}</p>
+		<p style="padding-bottom: 3px;padding-left: 10px;" [innerHtml]="feeds.text"></p>
 	</ion-card-content>  
 	<div (click)="viewPost(feeds)">
 		<div class="pg_wrapper" *ngIf="feeds.photos_num <= 2">

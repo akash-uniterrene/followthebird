@@ -19,7 +19,7 @@
 		<ion-label class="commant-wrap"> 
 			<div  class="comment-box" >
 				<h3>{{comment.author_name}}</h3>
-				<p *ngIf="stickers.hasOwnProperty(comment.text) == false">{{comment.text}}</p>
+				<div *ngIf="stickers.hasOwnProperty(comment.text) == false"><div [innerHtml]="comment.text"></div></div>
 				<div *ngIf="stickers.hasOwnProperty(comment.text) == true"><img [src]="imageURL+stickers[comment.text]" ></div>
 				<img class="comment_image" *ngIf="comment.image != ''" [src]="imageURL+comment.image">
 			</div>			
@@ -54,19 +54,6 @@
 		</ion-col>
 	</ion-row>
 <ion-footer>
-  <!-- <ion-toolbar>
-    <ion-row class="message_row">
-      <ion-col col-9>
-        <ion-item no-lines>
-        </ion-item>
-      </ion-col>
-      <ion-col col-3>
-      <button ion-button outline color="primary" placeholder="Write a comment"  (click)="postComment()" >
-        Send
-      </button>
-      </ion-col>
-    </ion-row>
-  </ion-toolbar> -->
   <ion-toolbar>
 	<ion-buttons left *ngIf="publishPhotos== ''">
 	  <button ion-button icon-only color="primary" (tap)="takeCameraSnap()">
@@ -76,7 +63,7 @@
 		<ion-icon ios="ios-image" md="md-image"></ion-icon>
 	  </button>	  
 	  <button ion-button icon-only color="primary" (tap)="showSticker()"> 
-		<ion-icon ios="ios-happy" md="md-happy" style="color: #750bb5 !important;"></ion-icon>
+		<ion-icon ios="ios-happy" md="md-happy" ></ion-icon>
 	  </button>	  	  
 	</ion-buttons>
 	<ion-item no-lines>
@@ -88,8 +75,23 @@
 	  </button>
 	</ion-buttons>
   </ion-toolbar>
-  <div class="stickers_container" [style.height.px]="stickerHeight" >
-	<ion-grid>
+  <ion-segment [(ngModel)]="stickerEmoji" class="sticker_emoji_tab" *ngIf="sticker_active == 'true'">
+	<ion-segment-button value="emoji">
+	  Emoji
+	</ion-segment-button>
+	<ion-segment-button value="sticker">
+	  Sticker
+	</ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="stickerEmoji" class="stickers_container" [style.height.px]="stickerHeight" >
+	<ion-grid *ngSwitchCase="'emoji'">
+		<ion-row>
+			<ion-col *ngFor="let emoji of allEmoji" col-2 (tap)="sendEmoji(emoji.pattern)">
+			  <i class="js_emoji twa twa-2x twa-{{emoji['class']}}"></i>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-grid *ngSwitchCase="'sticker'">
 	  <ion-row>
 		<ion-col *ngFor="let sticker of allSticker" col-3 (tap)="sendStickerMsg(':STK-'+sticker.sticker_id+':')"> 
 			<img [src]="imageURL+sticker.image">

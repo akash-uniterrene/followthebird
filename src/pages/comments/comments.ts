@@ -35,7 +35,11 @@ export class CommentsPage {
 	
 	private stickers = [];
 	private stickerHeight;
+	private stickerEmoji : string = "emoji";
+	private sticker_active = 'false';
+	private showEmojiTab;
 	private allSticker = [];
+	private allEmoji = [];
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public user: User, formBuilder: FormBuilder, public viewCtrl:ViewController,public modalCtrl: ModalController, public loadingCtrl: LoadingController, private camera: Camera, public toastCtrl: ToastController, public post: Post) {
 	this.comments = this.navParams.get('comments') || [];
@@ -69,7 +73,11 @@ export class CommentsPage {
 	
 	this.user.getStickers({}).then(data => {		  
 		this.allSticker = data[0];	
-	});	
+	});
+	
+	this.user.getEmojis({}).then(data => {		  
+		this.allEmoji = data[0];	
+	});
   }
 	
   dismiss() {
@@ -118,6 +126,7 @@ export class CommentsPage {
   }
   
   showSticker(){
+	this.sticker_active = 'true';  
 	let timer = 100;
 	var interval;
 	clearInterval(interval);
@@ -135,6 +144,7 @@ export class CommentsPage {
   }
   
   hideSticker() {
+	this.sticker_active = 'false';
 	let timer = 100;
 	var interval;
 	clearInterval(interval);
@@ -149,6 +159,14 @@ export class CommentsPage {
 			clearInterval(interval);
 		}
     }, smooth);
+  }
+  
+  showEmoji(action,event){
+	  this.showEmojiTab = action;
+  }
+
+  sendEmoji(emoji){
+	this.post_comment.message = this.post_comment.message + emoji + ' ';
   }
   
   sendStickerMsg(sticker){

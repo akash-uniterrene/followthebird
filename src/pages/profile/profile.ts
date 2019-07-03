@@ -354,30 +354,6 @@ export class ProfilePage {
 		}
 	}
 	
-	/* uploadFromGallery(type){
-		if(type == 'profile'){ 
-			this.profilePhoto.nativeElement.click(); 
-		} else { 
-			this.coverPhoto.nativeElement.click(); 
-		}
-	}
-	
-	processWebImage(event,type) {
-		let reader = new FileReader();
-		reader.onload = (readerEvent) => {
-		let imageData = (readerEvent.target as any).result;
-		 if(type == 'profile'){
-			this.profilePhotoOptions.patchValue({ 'file': imageData }); 
-			this.uploadProfilePhoto(this.profilePhotoOptions);
-		 } else {
-			this.coverPhotoOptions.patchValue({ 'file': imageData });  
-			this.uploadCoverPhoto(this.coverPhotoOptions); 
-			
-		 }		  
-		};
-		reader.readAsDataURL(event.target.files[0]);
-	} */
-	  
 	uploadProfilePhoto(params){
 
 		let loading = this.loadingCtrl.create({

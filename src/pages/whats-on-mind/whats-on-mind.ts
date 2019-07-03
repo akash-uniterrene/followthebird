@@ -398,10 +398,11 @@ export class WhatsOnMindPage {
 		 });
 	}
 	
-	uploadFromGallery(type){
-		if(type == 'photo'){
-			this.postPhoto.nativeElement.click();
-		} else if(type == 'video') {
+	uploadFromGallery(type){	
+		/* this.chooser.getFile('image/*,video/*')
+		  .then(file => console.log(file ? file.dataURI : 'canceled'))
+		  .catch((error: any) => console.error(error));	 */
+		if(type == 'video') {
 			this.postVideo.nativeElement.click();
 		}else if(type == 'audio') {
 			this.postAudio.nativeElement.click();
@@ -409,10 +410,6 @@ export class WhatsOnMindPage {
 			this.postFile.nativeElement.click();
 		}
 	}
-	
-	processWebImage(event) {
-		this.uploadPhoto(event.target.files);	  
-	} 
 
 	processWebVideo(event) {
 		this.postVideoOptions.patchValue({ 'multiple': false });
@@ -478,33 +475,6 @@ export class WhatsOnMindPage {
 		});
 	}
 	
-	uploadPhoto(params){
-		let loading = this.loadingCtrl.create({
-			content: 'Uploading...'
-		});
-		loading.present();
-		  	console.log(this.postPhotoOptions);
-		 this.user.photoMultiUploader(params,this.postPhotoOptions.value).subscribe((resp) => {
-			loading.dismiss();			
-			if(this.publishPhotos.length > 0){
-				for (var key in resp) {
-				  this.publishPhotos.push(resp[key]);
-				}
-			} else {
-				this.publishPhotos = resp;
-			}
-			this.publisherInfo.photos = JSON.stringify(this.publishPhotos);
-		}, (err) => {
-			loading.dismiss();		
-		  let toast = this.toastCtrl.create({
-			message: "image uploading failed",
-			duration: 3000,
-			position: 'top'
-		  });
-		  toast.present();
-		});
-	}
-	
 	uploadMedia(file,type){
 		let loading = this.loadingCtrl.create({
 			content: 'Uploading...'
@@ -532,9 +502,7 @@ export class WhatsOnMindPage {
 				this.publisherInfo.audio = myJSON;
 			} else {
 				this.publisherInfo.file = myJSON;
-			}
-			
-			console.log(this.publisherInfo);
+			}		
 		}, (err) => {
 		 loading.dismiss();		
 		 let toast = this.toastCtrl.create({

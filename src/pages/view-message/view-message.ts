@@ -47,13 +47,6 @@ export class ViewMessagePage {
   private recipients = [];
   
   private stickers = [];
-  private emojis = {
-	  ":D":"😃",
-	  ":kiss:":"💋",
-	  ":heart:":"❤️",
-	  ":green_heart:":"💚",
-	  ":cupid:":"💘",
-  };
   private stickerHeight;
   private stickerEmoji : string = "emoji";
   private sticker_active = 'false';
@@ -227,7 +220,6 @@ export class ViewMessagePage {
   
   showSticker(){
 	this.sticker_active = 'true';
-	console.log("hi",this.sticker_active);
 	let timer = 100;
 	var interval;
 	clearInterval(interval);
@@ -265,9 +257,6 @@ export class ViewMessagePage {
   }
   
   showEmoji(action,event){
-	 /*  console.log(event);
-	  event.target.style.backgroundColor = "#750bb5";
-	  event.target.style.color = "#ffffff"; */
 	  this.showEmojiTab = action;
   }
 
